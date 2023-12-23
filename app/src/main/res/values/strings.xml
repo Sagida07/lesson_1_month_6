@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">lesson_1_month_6</string>
+    <string name="location">Location</string>
+    <string name="last_location">last location</string>
+    <string name="species">species</string>
+    <string name="hyphen">hyphen</string>
+    <string name="status">status</string>
+    <string name="name">name</string>
+</resources>
