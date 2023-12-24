@@ -1,13 +1,13 @@
-package com.example.lesson_1_month_6.ui
+package com.example.lesson_1_month_6.ui.characters
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lesson_1_month_6.data.Character
 import com.example.lesson_1_month_6.databinding.ActivityCharactersBinding
 import com.example.lesson_1_month_6.recycler.RMAdapter
+import com.example.lesson_1_month_6.ui.details.DetailsActivity
 import com.example.lesson_1_month_6.ui.utils.RMKeys
 import dagger.hilt.android.AndroidEntryPoint
 
