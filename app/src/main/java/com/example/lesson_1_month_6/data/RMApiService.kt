@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface RMApiService {
         @GET("character")
-        fun getCharacters(): Call<BaseResponse>
+        fun getCharacters(): Call<BaseResponse<Character>>
 }

@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.lesson_1_month_6.data.BaseResponse
+import com.example.lesson_1_month_6.data.Character
 import com.example.lesson_1_month_6.databinding.ActivityDetailsBinding
+import com.example.lesson_1_month_6.ui.utils.RMKeys
 
 class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
@@ -14,7 +16,10 @@ class DetailsActivity : AppCompatActivity() {
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val receiveData = intent.getSerializableExtra("characterModel") as BaseResponse.Character
+        val receiveData = intent.getIntExtra(RMKeys.CHARACTER_ID_ARG,0)
+
+
+
         with(binding) {
             tvCharacterName.text = receiveData.name
             tvStatus.text = receiveData.status
