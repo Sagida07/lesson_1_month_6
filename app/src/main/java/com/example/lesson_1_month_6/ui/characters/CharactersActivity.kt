@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.lesson_1_month_6.data.Character
 import com.example.lesson_1_month_6.databinding.ActivityCharactersBinding
 import com.example.lesson_1_month_6.recycler.RMAdapter
 import com.example.lesson_1_month_6.ui.details.DetailsActivity
@@ -15,7 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class CharactersActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCharactersBinding
-    private val charactersViewModel: CharactersViewModel by viewModels()
+    private val rmViewModel: ViewModel by viewModels()
+
     private val rmAdapter by lazy { RMAdapter(this::onClickItem) }
 
 
@@ -25,8 +29,10 @@ class CharactersActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupCharactersRecycler()
 
-        charactersViewModel.getCharacters().observe(this) {
+        setContentView(binding.root)
+        rmViewModel.getCharacters.observe(this) {
             rmAdapter.submitList(it)
+            setupCharactersRecycler()
         }
     }
 
@@ -36,11 +42,12 @@ class CharactersActivity : AppCompatActivity() {
             this@CharactersActivity, LinearLayoutManager.VERTICAL, false
 
         )
+        adapter = rmAdapter
     }
 
-    private fun onClickItem(characterId: Int) {
+    private fun onClickItem(character: Character) {
         val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra(RMKeys.CHARACTER_ID_ARG, characterId)
+        intent.putExtra(RMKeys.CHARACTER_ID_ARG, character.id)
         startActivity(intent)
     }
 }

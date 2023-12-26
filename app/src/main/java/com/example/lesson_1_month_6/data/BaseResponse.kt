@@ -16,7 +16,6 @@ data class Character(
     val status: String,
 ) : Serializable
 
-
 data class Location(
     val name: String,
     val url: String
