@@ -2,12 +2,15 @@ package com.example.lesson_1_month_6.ui.characters
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lesson_1_month_6.data.Character
+import com.example.lesson_1_month_6.data.Resource
 import com.example.lesson_1_month_6.databinding.ActivityCharactersBinding
 import com.example.lesson_1_month_6.recycler.RMAdapter
 import com.example.lesson_1_month_6.ui.details.DetailsActivity
@@ -18,8 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CharactersActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCharactersBinding
-    private val rmViewModel: ViewModel by viewModels()
-
+    private val viewModel: CharactersViewModel by viewModels()
     private val rmAdapter by lazy { RMAdapter(this::onClickItem) }
 
 
@@ -27,17 +29,29 @@ class CharactersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCharactersBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupCharactersRecycler()
 
-        setContentView(binding.root)
-        rmViewModel.getCharacters.observe(this) {
-            rmAdapter.submitList(it)
+        viewModel.getCharacters().observe(this) { result ->
+            when (result) {
+                is Resource.Error -> {
+                    Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
+                    binding.progressBar.isVisible = false
+                }
+
+                is Resource.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+
+                is Resource.Success -> {
+                    rmAdapter.submitList(result.data)
+                    binding.progressBar.isVisible = false
+                }
+            }
+
             setupCharactersRecycler()
         }
     }
 
     private fun setupCharactersRecycler() = with(binding.recyclerView) {
-        adapter = this@CharactersActivity.rmAdapter
         layoutManager = LinearLayoutManager(
             this@CharactersActivity, LinearLayoutManager.VERTICAL, false
 
@@ -45,9 +59,9 @@ class CharactersActivity : AppCompatActivity() {
         adapter = rmAdapter
     }
 
-    private fun onClickItem(character: Character) {
+    private fun onClickItem(characterId: Int) {
         val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra(RMKeys.CHARACTER_ID_ARG, character.id)
+        intent.putExtra(RMKeys.CHARACTER_ID_ARG, characterId)
         startActivity(intent)
     }
 }

@@ -4,5 +4,5 @@ enum class Indicator {
 
     ALIVE,
     DEAD,
-    UNKNOWN
+    UNKNOWN;
 }

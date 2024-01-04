@@ -28,6 +28,18 @@
         app:layout_constraintStart_toEndOf="@id/img_character"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/img_indicator"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/ind_unknown"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_status"
+        app:layout_constraintEnd_toStartOf="@+id/tv_status"
+        app:layout_constraintStart_toEndOf="@id/img_character"
+        app:layout_constraintTop_toTopOf="@+id/tv_status" />
+
+
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="wrap_content"
