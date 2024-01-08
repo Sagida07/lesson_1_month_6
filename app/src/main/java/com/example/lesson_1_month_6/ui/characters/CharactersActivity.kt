@@ -3,25 +3,20 @@ package com.example.lesson_1_month_6.ui.characters
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lesson_1_month_6.data.Character
 import com.example.lesson_1_month_6.data.Resource
 import com.example.lesson_1_month_6.databinding.ActivityCharactersBinding
 import com.example.lesson_1_month_6.recycler.RMAdapter
 import com.example.lesson_1_month_6.ui.details.DetailsActivity
 import com.example.lesson_1_month_6.ui.utils.RMKeys
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class CharactersActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCharactersBinding
-    private val viewModel: CharactersViewModel by viewModels()
+    private val viewModel: CharactersViewModel by viewModel()
     private val rmAdapter by lazy { RMAdapter(this::onClickItem) }
 
 
@@ -46,7 +41,6 @@ class CharactersActivity : AppCompatActivity() {
                     binding.progressBar.isVisible = false
                 }
             }
-
             setupCharactersRecycler()
         }
     }
@@ -54,7 +48,6 @@ class CharactersActivity : AppCompatActivity() {
     private fun setupCharactersRecycler() = with(binding.recyclerView) {
         layoutManager = LinearLayoutManager(
             this@CharactersActivity, LinearLayoutManager.VERTICAL, false
-
         )
         adapter = rmAdapter
     }
