@@ -9,6 +9,5 @@ import com.example.lesson_1_month_6.data.Resource
 class CharactersViewModel(
     private val repository: Repository
 ) : ViewModel() {
-    fun getCharacters(): LiveData<Resource<List<Character>>> =
-        repository.getCharacters()
+    fun getCharacters(): LiveData<Resource<List<Character>>> = repository.getCharacters()
 }

@@ -7,4 +7,5 @@ val repositoryModule = module {
     single {
         Repository(get())
     }
+    //single{Repository(get)
 }

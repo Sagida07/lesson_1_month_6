@@ -7,10 +7,11 @@ import com.example.lesson_1_month_6.R
 import com.example.lesson_1_month_6.data.Character
 import com.example.lesson_1_month_6.databinding.ActivityDetailsBinding
 import com.example.lesson_1_month_6.ui.Indicator
+import com.example.lesson_1_month_6.ui.base.BaseActivity
 import com.example.lesson_1_month_6.ui.utils.RMKeys
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailsActivity : AppCompatActivity() {
+class DetailsActivity : BaseActivity() {
     private lateinit var binding: ActivityDetailsBinding
     private val viewModel by viewModel<DetailsViewModel>()
 
@@ -21,9 +22,11 @@ class DetailsActivity : AppCompatActivity() {
 
         val id = intent.getIntExtra(RMKeys.CHARACTER_ID_ARG, 0)
 
-        viewModel.getDetails(id).observe(this) {
-            setupCharacterData(it)
-        }
+        viewModel.getDetails(id).stateHandler(
+            success = {
+                setupCharacterData(it)
+            }
+        )
     }
 
     private fun setupCharacterData(receiveData: Character) = with(binding) {

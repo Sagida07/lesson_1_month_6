@@ -9,8 +9,9 @@ val viewModelModule = module {
     viewModel {
         CharactersViewModel(get())
     }
-
+    //for characters
     viewModel {
         DetailsViewModel(get())
     }
+    //for details(desc)
 }

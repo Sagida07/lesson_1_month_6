@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lesson_1_month_6.data.Resource
 import com.example.lesson_1_month_6.databinding.ActivityCharactersBinding
 import com.example.lesson_1_month_6.recycler.RMAdapter
+import com.example.lesson_1_month_6.ui.base.BaseActivity
 import com.example.lesson_1_month_6.ui.details.DetailsActivity
 import com.example.lesson_1_month_6.ui.utils.RMKeys
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CharactersActivity : AppCompatActivity() {
+class CharactersActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCharactersBinding
     private val viewModel: CharactersViewModel by viewModel()
@@ -24,25 +25,16 @@ class CharactersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCharactersBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupCharactersRecycler()
 
-        viewModel.getCharacters().observe(this) { result ->
-            when (result) {
-                is Resource.Error -> {
-                    Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
-                    binding.progressBar.isVisible = false
-                }
-
-                is Resource.Loading -> {
-                    binding.progressBar.isVisible = true
-                }
-
-                is Resource.Success -> {
-                    rmAdapter.submitList(result.data)
-                    binding.progressBar.isVisible = false
-                }
+        viewModel.getCharacters().stateHandler(
+            success = {
+                rmAdapter.submitList(it)
+            },
+            state = { state ->
+                binding.progressBar.isVisible = state is Resource.Loading
             }
-            setupCharactersRecycler()
-        }
+        )
     }
 
     private fun setupCharactersRecycler() = with(binding.recyclerView) {
